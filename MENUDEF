@@ -1,0 +1,73 @@
+AddOptionMenu "OptionsMenu"
+{
+	StaticText	""
+	Submenu		"DeusDoom options",	"DD_Options"
+}
+
+
+OptionMenu "DD_Options"
+{
+	StaticText	"DeusDoom options", Purple
+	Submenu		"Controls",		"DD_Controls"
+	Submenu		"Settings",		"DD_Settings"
+	Submenu		"Credits",		"DD_Credits"
+}
+
+	OptionMenu "DD_Controls"
+	{
+		StaticText "Interface", Purple
+	}
+
+	OptionMenu "DD_Settings"
+	{
+		StaticText "DeusDoom settings", Purple
+		Submenu		"Control scheme",		"DD_Settings_ControlScheme"
+		Submenu		"Interface",			"DD_Settings_Interface"
+		Submenu		"Visual settings",		"DD_Settings_Visual"
+		Submenu		"Gameplay",			"DD_Settings_Gameplay"
+	}
+
+	OptionMenu "DD_Settings_ControlScheme"
+	{
+		StaticText "DeusDoom control scheme settings", Purple
+		StaticText ""
+	}
+	OptionMenu "DD_Settings_Interface"
+	{
+		StaticText "DeusDoom interface settings", Purple
+		StaticText ""
+	}
+	OptionMenu "DD_Settings_Visual"
+	{
+		StaticText "DeusDoom visual settings", Purple
+		StaticText ""
+	}
+	OptionMenu "DD_Settings_Gameplay"
+	{
+		StaticText "DeusDoom gameplay settings", Purple
+		StaticText ""
+	}
+
+	OptionMenu "DD_Credits"
+	{
+		StaticText "Credits", Purple
+		StaticText ""
+		StaticText "IMAGE/AUDIO ASSETS, MOD IDEA:", Purple
+		StaticText "Deus Ex", White
+		StaticText ""
+		StaticText "SPECIAL THANKS TO:", Purple
+		StaticText "Yholl - extensive playtesting, finding bugs, suggesting ideas", White
+		StaticText "KeksDose - for making a wondeful libeye code library", White
+		StaticText "ZikShadow - extensive playtesting", White
+		StaticText "josh771 - graphical assets", White
+		StaticText "KarolineDianne - suggesting ideas", White
+		StaticText "Sledge - suggesting ideas", White
+		StaticText "Corruption Cards [by CutmanMike] - graphical assets", White
+		StaticText "D2Icarus - finding a very interesting bug", White
+		StaticText "Mohl - finding bugs", White
+		StaticText "IKA - finding a bug", White
+		StaticText "Ryuhi - suggesting ideas", White
+		StaticText "silentw - playtesting", White
+		StaticText "Doomguy914 - finding a typo", White
+		StaticText "Kneight - reporting a bug", White
+	}
