@@ -20,7 +20,7 @@ class UI_DDItemFrame : UI_Widget
 
 	override void UIInit()
 	{
-		frame_tex = TexMan.checkForTexture("AUGUI20");
+		frame_tex = TexMan.checkForTexture("DXUI01");
 	}
 
 	override void drawOverlay(RenderEvent e)

@@ -15,7 +15,7 @@ class UI_DDScrollBar : UI_Widget
 		butn_up_pr = TexMan.CheckForTexture("UIBUTN10");
 		butn_down = TexMan.CheckForTexture("UIBUTN07");
 		butn_down_pr = TexMan.CheckForTexture("UIBUTN08");
-		scrollbg = TexMan.CheckForTexture("AUGUI41");
+		scrollbg = TexMan.CheckForTexture("DXUI02");
 	}
 
 	override void drawOverlay(RenderEvent e)
