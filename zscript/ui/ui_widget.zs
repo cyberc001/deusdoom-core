@@ -3,7 +3,9 @@
 #include "zscript/ui/widget_classes/ui_ddmultilinelabel.zs"
 #include "zscript/ui/widget_classes/ui_ddscrollbar.zs"
 
+#include "zscript/ui/widget_classes/ui_ddskillbutton.zs"
 #include "zscript/ui/widget_classes/ui_dditemframe.zs"
+#include "zscript/ui/widget_classes/ui_ddsmbutton_upgradeskill.zs"
 
 class UI_Widget ui
 {

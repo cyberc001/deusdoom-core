@@ -9,6 +9,7 @@ class DD_EventHandler : StaticEventHandler
 {
 	SoundUtils snd_utils;
 	RecognitionUtils recg_utils;
+	SkillUtils skill_utils;
 	DD_ModChecker mod_checker;
 	DD_PatchChecker patch_checker;
 
@@ -20,6 +21,7 @@ class DD_EventHandler : StaticEventHandler
 	ui Font aug_overlay_font_bold;
 
 	ui UI_WindowManager wndmgr;
+		ui UI_Skills wnd_skills;
 
 	override void onRegister()
 	{
@@ -28,6 +30,7 @@ class DD_EventHandler : StaticEventHandler
 		snd_utils = new("SoundUtils");
 		recg_utils = new("RecognitionUtils");
 		recg_utils.loadLists();
+		skill_utils = new("SkillUtils");
 		mod_checker = new("DD_ModChecker");
 		mod_checker.init();
 		patch_checker = new("DD_PatchChecker");
@@ -36,10 +39,18 @@ class DD_EventHandler : StaticEventHandler
 		queue.qstate = false;
 	}
 
+	override void playerSpawned(PlayerEvent e)
+	{
+		PlayerPawn plr = players[e.PlayerNumber].mo;
+		DD_SkillState skst = DD_SkillState(Inventory.Spawn("DD_SkillState"));
+		if(plr.countInv("DD_SkillState") == 0)
+			plr.addInventory(skst);
+		else
+			skst.destroy();
+	}
+
 	override void worldTick()
 	{
-		snd_utils.worldTick();
-
 		self.isUIProcessor = queue.qstate;
 		self.requireMouse = queue.qstate;
 	}
@@ -71,6 +82,27 @@ class DD_EventHandler : StaticEventHandler
 		return false;
 	}
 
+	override void consoleProcess(ConsoleEvent e)
+	{
+		if(e.name == "dd_toggle_ui_skills")
+		{
+			// Open/close skills UI
+			// Arguments: none
+			wndmgr.addWindow(self, wnd_skills, 7.5, 5);
+		}
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		PlayerInfo plr = players[e.Player];
+		if(!plr || !plr.mo)
+			return;
+
+		if(e.name == "dd_upgrade_skill"){
+			skill_utils.upgradeSkill(plr.mo, e.args[0]);
+		}
+	}
+
 	override void UiTick()
 	{
 		if(!queue.ui_init)
@@ -82,6 +114,7 @@ class DD_EventHandler : StaticEventHandler
 				aug_ui_font_bold = Font.getFont("DD_UIBold");
 				aug_overlay_font_bold = Font.getFont("DD_OverlayBold");
 				wndmgr = new("UI_WindowManager");
+				wnd_skills = new("UI_Skills");
 			}
 		}
 		if(wndmgr)

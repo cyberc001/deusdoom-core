@@ -1,3 +1,5 @@
+#include "zscript/ui/wnd_classes/ui_skills.zs"
+
 class UI_WindowManager ui
 {
 	// List of currently existing windows.
@@ -21,10 +23,7 @@ class UI_WindowManager ui
 	ui bool uiProcess(UiEvent e)
 	{
 		if(e.type == UiEvent.Type_LButtonDown
-		|| e.type == UiEvent.Type_LButtonUp
 		|| e.type == UiEvent.Type_RButtonDown
-		|| e.type == UiEvent.Type_RButtonUp
-		|| e.type == UiEvent.Type_MButtonUp
 		|| e.type == UiEvent.Type_MButtonDown)
 		{
 			int mousex = e.MouseX * 320 / screen.getWidth();
@@ -194,10 +193,7 @@ class UI_Window ui
 	ui virtual bool processUIInput(UiEvent e)
 	{
 		if(e.type == UiEvent.Type_LButtonDown
-		|| e.type == UiEvent.Type_LButtonUp
 		|| e.type == UiEvent.Type_RButtonDown
-		|| e.type == UiEvent.Type_RButtonUp
-		|| e.type == UiEvent.Type_MButtonUp
 		|| e.type == UiEvent.Type_MButtonDown)
 		{
 			int mousex = round(double(e.MouseX) * 320 / screen.getWidth());
