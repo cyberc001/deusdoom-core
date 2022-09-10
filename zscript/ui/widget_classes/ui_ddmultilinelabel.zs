@@ -22,7 +22,9 @@ class UI_DDMultiLineLabel : UI_DDLabel
 		text.split(lines, "\n");
 		double sx = x;
 		double sy = y;
-		for(uint i = scrolli; i < lines.size() && sy + UI_Draw.strHeight(text_font, lines[i], text_w, text_h) < y + h; ++i)
+		if(scrolli < 0)
+			return;
+		for(int i = scrolli; i < lines.size() && sy + UI_Draw.strHeight(text_font, lines[i], text_w, text_h) < y + h; ++i)
 		{
 			if(lines[i].length() > 0){
 				UI_Draw.str(text_font, lines[i], text_color, sx, sy,

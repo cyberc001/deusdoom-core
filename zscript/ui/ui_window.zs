@@ -1,3 +1,5 @@
+#include "zscript/ui/wnd_classes/ui_inventory.zs"
+#include "zscript/ui/wnd_classes/ui_navigation.zs"
 #include "zscript/ui/wnd_classes/ui_skills.zs"
 
 class UI_WindowManager ui
@@ -83,14 +85,11 @@ class UI_WindowManager ui
 	//	eh - event handler which call this function.
 	//	wnd - window object.
 	//	x, y - coordinates of window's top left corner.
-	ui void addWindow(DD_EventHandler eh, UI_Window wnd, double x = 0, double y = 0)
+	ui void addWindow(DD_EventHandler eh, UI_Window wnd)
 	{
 		wnds.push(wnd);
-		wnd.x = x;
-		wnd.y = y;
 		wnd.container = self;
 		wnd.ev_handler = eh;
-
 		if(wnd.demandsUIProcessor())
 			eh.queue.qstate = true;
 	}
@@ -108,9 +107,9 @@ class UI_WindowManager ui
 
 		if(wnds[wnd_i].demandsUIProcessor())
 			eh.queue.qstate = false;
-		wnds[wnd_i].container = null;
-		wnds[wnd_i].close();
 		wnds.delete(wnd_i);
+		wnd.close();
+		wnd.container = null;
 	}
 
 	// Name: UI_WindowManager::hasWindow()
@@ -127,7 +126,7 @@ class UI_WindowManager ui
 	}
 }
 
-class UI_Window ui
+class UI_Window ui abstract
 {
 	ui double x, y; // window top-left coordinates
 	// (can be, should not be implicitly changed in create(), but in UI_WindowManager.addWindow())
@@ -156,6 +155,8 @@ class UI_Window ui
 	ui virtual void UIInit() {}
 	ui virtual void close() {}
 
+	ui virtual String getName() { return ""; }
+	ui virtual String getToggEvent() { return ""; }
 
 	// --------------
 	// Drawing events

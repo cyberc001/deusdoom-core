@@ -1,6 +1,8 @@
+#include "zscript/ui/widget_classes/ui_ddexitbutton.zs"
 #include "zscript/ui/widget_classes/ui_ddsmbutton.zs"
 #include "zscript/ui/widget_classes/ui_ddlabel.zs"
 #include "zscript/ui/widget_classes/ui_ddmultilinelabel.zs"
+#include "zscript/ui/widget_classes/ui_ddnavigationbutton.zs"
 #include "zscript/ui/widget_classes/ui_ddscrollbar.zs"
 
 #include "zscript/ui/widget_classes/ui_ddskillbutton.zs"

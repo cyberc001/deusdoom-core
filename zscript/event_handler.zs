@@ -5,7 +5,12 @@ struct DD_EventHandlerQueue
 	bool ui_init;
 }
 
-class DD_EventHandler : StaticEventHandler
+class DD_EventHandlerBase : StaticEventHandler
+{
+	ui virtual void _ConsoleProcess(string e_name) {}
+}
+
+class DD_EventHandler : DD_EventHandlerBase
 {
 	SoundUtils snd_utils;
 	RecognitionUtils recg_utils;
@@ -21,7 +26,9 @@ class DD_EventHandler : StaticEventHandler
 	ui Font aug_overlay_font_bold;
 
 	ui UI_WindowManager wndmgr;
+		ui UI_Navigation wnd_nav;
 		ui UI_Skills wnd_skills;
+		ui UI_Inventory wnd_inventory;
 
 	override void onRegister()
 	{
@@ -82,13 +89,18 @@ class DD_EventHandler : StaticEventHandler
 		return false;
 	}
 
-	override void consoleProcess(ConsoleEvent e)
+	override void consoleProcess(ConsoleEvent e) { _ConsoleProcess(e.name); }
+	override void _ConsoleProcess(string e_name)
 	{
-		if(e.name == "dd_toggle_ui_skills")
-		{
-			// Open/close skills UI
-			// Arguments: none
-			wndmgr.addWindow(self, wnd_skills, 7.5, 5);
+		if(e_name == "dd_toggle_ui_skills"){
+			wndmgr.addWindow(self, wnd_skills);
+			wnd_nav.child_wnd = wnd_skills;
+			wndmgr.addWindow(self, wnd_nav);
+		}
+		else if(e_name == "dd_toggle_ui_inventory"){
+			wndmgr.addWindow(self, wnd_inventory);
+			wnd_nav.child_wnd = wnd_inventory;
+			wndmgr.addWindow(self, wnd_nav);
 		}
 	}
 
@@ -99,7 +111,8 @@ class DD_EventHandler : StaticEventHandler
 			return;
 
 		if(e.name == "dd_upgrade_skill"){
-			skill_utils.upgradeSkill(plr.mo, e.args[0]);
+			if(skill_utils.getSkill(e.args[0]))
+				skill_utils.upgradeSkill(plr.mo, e.args[0]);
 		}
 	}
 
@@ -108,13 +121,14 @@ class DD_EventHandler : StaticEventHandler
 		if(!queue.ui_init)
 		{
 			queue.ui_init = true;
-			if(!wndmgr)
-			{
+			if(!wndmgr){
 				aug_ui_font = Font.getFont("DD_UI");
 				aug_ui_font_bold = Font.getFont("DD_UIBold");
 				aug_overlay_font_bold = Font.getFont("DD_OverlayBold");
 				wndmgr = new("UI_WindowManager");
+				wnd_nav = new("UI_Navigation");
 				wnd_skills = new("UI_Skills");
+				wnd_inventory = new("UI_Inventory");
 			}
 		}
 		if(wndmgr)
