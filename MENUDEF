@@ -56,6 +56,7 @@ OptionMenu "DD_Options"
 		StaticText "Deus Ex", White
 		StaticText ""
 		StaticText "SPECIAL THANKS TO:", Purple
+		StaticText "Accensus - UI graphics remaster", White
 		StaticText "Yholl - extensive playtesting, finding bugs, suggesting ideas", White
 		StaticText "KeksDose - for making a wondeful libeye code library", White
 		StaticText "ZikShadow - extensive playtesting", White
