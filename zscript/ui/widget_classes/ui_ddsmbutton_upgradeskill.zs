@@ -21,12 +21,12 @@ class UI_DDSmallButton_UpgradeSkill : UI_DDSmallButton
 		if(plr.mo){
 			if(!DD_EventHandler(StaticEventHandler.Find("DD_EventHandler")).skill_utils.getSkill(parent_wnd.selected_skill) || DD_EventHandler(StaticEventHandler.Find("DD_EventHandler")).skill_utils.canUpgradeSkill(plr.mo, parent_wnd.selected_skill)){
 				disabled = false;
-				text_color = 11;
+				text_color = 0xFFFFFF;
 				text = "Upgrade";
 			}
 			else{
 				disabled = true;
-				text_color = 12;
+				text_color = 0x888888;
 			}
 		}
 	}

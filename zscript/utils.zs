@@ -4,6 +4,7 @@
 #include "zscript/utils/mod_checker.zs"
 #include "zscript/utils/recognition_utils.zs"
 #include "zscript/utils/skill_utils.zs"
+#include "zscript/utils/spawn_utils.zs"
 #include "zscript/utils/sound_utils.zs"
 #include "zscript/utils/state_utils.zs"
 #include "zscript/utils/texture_utils.zs"

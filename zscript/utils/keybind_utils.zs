@@ -24,7 +24,7 @@ class KeyBindUtils
 			if(KeyBindUtils.keychars[i] == keyChar){
 				return KeyBindUtils.keyscans[i];
 			}
-		return 0;
+		return -1;
 	}
 
 	static string keyScanToName(int keyScan)

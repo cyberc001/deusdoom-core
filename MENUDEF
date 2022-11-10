@@ -16,6 +16,9 @@ OptionMenu "DD_Options"
 	OptionMenu "DD_Controls"
 	{
 		StaticText "Interface", Purple
+		StaticText ""
+		Control "Open inventory", dd_toggle_ui_inventory
+		Control "Open skills interface", dd_toggle_ui_skills
 	}
 
 	OptionMenu "DD_Settings"
@@ -45,6 +48,14 @@ OptionMenu "DD_Options"
 	OptionMenu "DD_Settings_Gameplay"
 	{
 		StaticText "DeusDoom gameplay settings", Purple
+		StaticText ""
+		StaticText "Skill points multiplier", Purple
+		StaticText "Skill points you gain by killing monsters, completing levels", Green
+		StaticText "and finding secrets are multiplied by this amount.", Green
+		StaticText "Always rounded up.", Green
+		StaticText "Changes are applied after loading/exiting a level.", Green
+		StaticText "CVAR: dd_skill_award_mult", DarkGray
+		Slider "Skill points multiplier", "dd_skill_award_mult", 0.05, 10.0, 0.05, 2
 		StaticText ""
 	}
 

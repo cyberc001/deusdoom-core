@@ -35,10 +35,10 @@ class UI_DDItemFrame : UI_Widget
 				y + UI_Draw.texHeight(frame_tex, frame_w, frame_h)/2
 				  - UI_Draw.texHeight(item_tex, tex_w, tex_h)/2,
 				tex_w, tex_h);
-		UI_Draw.str(disp_font, disp_name1, 11, x+1, y+1, str_w, str_h);
-		UI_Draw.str(disp_font, disp_name2, 11, x+1,
+		UI_Draw.str(disp_font, disp_name1, 0xFFFFFF, x+1, y+1, str_w, str_h);
+		UI_Draw.str(disp_font, disp_name2, 0xFFFFFF, x+1,
 				y+1+UI_Draw.strHeight(disp_font, disp_name1, str_w, str_h), str_w, str_h);
-		UI_Draw.str(disp_font, String.Format("%d", cnt), 11, x+1,
+		UI_Draw.str(disp_font, String.Format("%d", cnt), 0xFFFFFF, x+1,
 				y + UI_Draw.texHeight(frame_tex, frame_w, frame_h) - UI_Draw.strHeight(disp_font, disp_name1, str_w, str_h) - 1,
 				str_w, str_h);
 	}

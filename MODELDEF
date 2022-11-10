@@ -1,0 +1,23 @@
+Model DD_DXLogo
+{
+	Path "models/"
+	Model 0 "DXLogo_d.3d"
+	Scale 0.45 0.45 0.225
+
+	Offset 0 0 50
+
+	SurfaceSkin 0 0 "DXLogoTex1.tga"
+	FrameIndex DDLG A 0 0
+}
+
+Model DD_DXText
+{
+	Path "models/"
+	Model 0 "DXText_d.3d"
+	Scale -1.5 -1.5 0.75
+
+	Offset 0 0 50
+
+	SurfaceSkin 0 0 "DXTextTex1.tga"
+	FrameIndex DDTX A 0 0
+}

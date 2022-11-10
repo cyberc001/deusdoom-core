@@ -143,12 +143,13 @@ class UI_Draw
 			h = font_h * -h;
 		}
 
-		Screen.DrawText(font, clr,
+		Screen.DrawText(font, Font.CR_UNTRANSLATED,
 					x * (double(font_w) / w), y * (double(font_h) / h),
 					text,
 					DTA_VIRTUALWIDTHF, font_w * 320 / w,
 					DTA_VIRTUALHEIGHTF, font_h * 200 / h,
-					DTA_KEEPRATIO, true
+					DTA_KEEPRATIO, true,
+					DTA_FILLCOLOR, clr
 					);
 	}
 

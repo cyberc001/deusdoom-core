@@ -1,4 +1,10 @@
 gameinfo
 {
-	addeventhandlers = "DD_EventHandler"
+	addeventhandlers = "DD_EventHandler", "DD_SoundHandler"
+}
+
+map TITLEMAP "DeusDoom"
+{
+	LevelNum = -1
+	Music = "main_title"
 }

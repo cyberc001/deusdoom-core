@@ -1,3 +1,6 @@
 ui/menu/activate			MENUACTV
 ui/menu/focus				MENUFOCS
 ui/menu/press				MENUPRES
+
+DDItem/item_pickup			Sounds/WeaponPickup.wav
+DDItem/item_drop			Sounds/DropSmallWeapon.wav

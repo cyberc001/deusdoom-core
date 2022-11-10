@@ -41,7 +41,7 @@ class UI_Navigation : UI_Window
 				nav_butns[s].w = UI_Draw.strWidth(aug_font, wnd.getName(), 0, 6 - 2) + 6; nav_butns[s].h = 6;
 				nav_butns[s].text = wnd.getName();
 				nav_butns[s].text_font = aug_font;
-				nav_butns[s].text_color = 11;
+				nav_butns[s].text_color = 0xFFFFFF;
 				nav_butns[s].parent_nav = self; nav_butns[s].wnd_togg_event = wnd.getToggEvent();
 				addWidget(nav_butns[s]);
 				wnd.destroy();
@@ -52,7 +52,7 @@ class UI_Navigation : UI_Window
 		exit_butn.w = 18; exit_butn.h = 6;
 		exit_butn.text = "Exit";
 		exit_butn.text_font = aug_font;
-		exit_butn.text_color = 11;
+		exit_butn.text_color = 0xFFFFFF;
 		exit_butn.parent_nav = self;
 		addWidget(exit_butn);
 	}
@@ -78,5 +78,6 @@ class UI_Navigation : UI_Window
 	{
 		if(child_wnd && container.hasWindow(child_wnd))
 			container.closeWindow(ev_handler, child_wnd);
+		child_wnd = null;
 	}
 }

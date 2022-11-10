@@ -105,8 +105,12 @@ class UI_WindowManager ui
 		if(wnd_i == wnds.size()) // window does not exist
 			return;
 
-		if(wnds[wnd_i].demandsUIProcessor())
+		if(wnds[wnd_i].demandsUIProcessor()){			
 			eh.queue.qstate = false;
+			for(uint i = 0; i < wnds.size(); ++i)
+				if(i != wnd_i && wnds[i].demandsUIProcessor())
+				{ eh.queue.qstate = true; break; }
+		}
 		wnds.delete(wnd_i);
 		wnd.close();
 		wnd.container = null;

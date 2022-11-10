@@ -1,0 +1,8 @@
+addkeysection "DeusDoom controls" DD_ControlsKF
+
+	addmenukey "Open skills interface" dd_toggle_ui_skills
+		alias dd_toggle_ui_skills "event dd_toggle_ui_skills"
+		defaultbind K dd_toggle_ui_skills
+	addmenukey "Open inventory" dd_toggle_ui_inventory
+		alias dd_toggle_ui_inventory "event dd_toggle_ui_inventory"
+		defaultbind I dd_toggle_ui_inventory
