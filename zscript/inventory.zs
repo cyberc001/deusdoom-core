@@ -92,8 +92,7 @@ class DD_InventoryPickupWrapper : Inventory
 
 	override void Tick()
 	{
-		//super.Tick();
-		if(!item) destroy();
+		if(!item || item.owner) { destroy(); return; }
 		if(item && item.vel.length() > 0)
 			Warp(item);
 	}
@@ -228,7 +227,7 @@ class DD_InventoryHolder : Inventory
 		bool has_duplicates = false;
 		// Stack with the same item type
 		for(uint i = 0; i < items.size(); ++i)
-			if(item.getClass() == items[i].item.getClass()){
+			if(items[i].item && item.getClass() == items[i].item.getClass()){
 				has_duplicates = true;
 				if(items[i].amount < items[i].max_stack){
 					items[i].amount = min(items[i].amount + wrap.amount, items[i].max_stack);
@@ -477,6 +476,12 @@ class DD_InventoryHolder : Inventory
 	{
 		if(hotbar_timer < hotbar_total_time)
 			++hotbar_timer;
+		// dirty, but I haven't found the cause yet
+		for(uint i = 0; i < items.size(); ++i)
+			if(!items[i].item){
+				items.delete(i);
+				--i;
+			}
 	}
 
 	void showHotbar()
