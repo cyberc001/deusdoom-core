@@ -87,7 +87,13 @@ class DD_EventHandler : DD_EventHandlerBase
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		name ddwepcls = "DDWeapon";
-		if(((ddwepcls && e.thing is ddwepcls) || e.thing is "DDItem" || (e.thing is "Ammo")) && !(e.thing is "DD_InventoryPickupWrapper")){
+		name ddcellcls = "DD_BioelectricCell";
+		name ddaugcancls = "DD_AugmentationCanister";
+		name ddaugupgrcls = "DD_AugmentationUpgradeCanister";
+		name ddauglegdcls = "DD_AugmentationUpgradeCanisterLegendary";
+		if(((ddwepcls && e.thing is ddwepcls) || e.thing is "DDItem" || e.thing is "Ammo"
+			|| (ddcellcls && e.thing is ddcellcls) || (ddaugcancls && e.thing is ddaugcancls) || (ddaugupgrcls && e.thing is ddaugupgrcls) || (ddauglegdcls && e.thing is ddauglegdcls))
+			&& !(e.thing is "DD_InventoryPickupWrapper")){
 			let wrap = DD_InventoryPickupWrapper(Actor.Spawn("DD_InventoryPickupWrapper", e.thing.pos));
 			wrap.init(Inventory(e.thing));
 		}

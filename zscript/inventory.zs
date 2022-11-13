@@ -61,6 +61,9 @@ class DDItem : Inventory
 	/* Ammo stuff */
 	bool stay_in_inventory;
 	property StayInInventory : stay_in_inventory;
+
+	bool do_use_func; // Call Use(bool) instead of just giving the player the item
+	property DoUseFunc : do_use_func;
 }
 
 class DD_InventoryWrapper
@@ -104,6 +107,7 @@ class DD_InventoryPickupWrapper : Inventory
 			item.TryPickUp(user);
 			item.destroy();
 			destroy();
+			return true;
 		}
 		if(ddih && item){
 			if(item is "Ammo" || (item is "DDItem" && !DDItem(item).stay_in_inventory)){
@@ -118,7 +122,9 @@ class DD_InventoryPickupWrapper : Inventory
 				user.A_StartSound(item.PickupSound, CHANF_LOCAL);
 				item.warp(owner);
 				item.A_ChangeLinkFlags(1, 1);
-				item.TryPickup(user); // mostly for Dragon's Tooth Sword dynamic light handling
+				name dts = "DDWeapon_DragonsToothSword";
+				if(item is dts)
+					item.TryPickup(user); 
 				destroy();
 				return true;
 			}
@@ -319,19 +325,23 @@ class DD_InventoryHolder : Inventory
 	bool useItem(DD_InventoryWrapper item, DD_InventoryWrapper another = null)
 	{
 		bool used = false;
-		if(!another){
-			used = item.item.use(false);
-			if(!used) { used = item.item.use(true); if(used) ++item.item.amount; }
-			if(!used && item.item is "Health") used = owner.GiveBody(item.item.amount, item.item.maxamount);
-			if(!used && !(item.item is "Health")){
-				let i = Inventory(Inventory.Spawn(item.item.getClass()));
-				used = i.tryPickup(item.item.owner);
-				if(!used) i.destroy();
+		if(item.item is "DDItem" && DDItem(item.item).do_use_func)
+			used = item.item.Use(false);
+		else{				
+			if(!another){
+				used = item.item.use(false);
+				if(!used) { used = item.item.use(true); if(used) ++item.item.amount; }
+				if(!used && item.item is "Health") used = owner.GiveBody(item.item.amount, item.item.maxamount);
+				if(!used && !(item.item is "Health")){
+					let i = Inventory(Inventory.Spawn(item.item.getClass()));
+					used = i.tryPickup(item.item.owner);
+					if(!used) i.destroy();
+				}
 			}
-		}
-		else if(item.item is "DDItem"){
-			DDItem(item.item).applyTo(another.item);
-			used = true;
+			else if(item.item is "DDItem"){
+				DDItem(item.item).applyTo(another.item);
+				used = true;
+			}
 		}
 		bool got_destroyed = false;
 		if(used){
@@ -477,10 +487,11 @@ class DD_InventoryHolder : Inventory
 		if(hotbar_timer < hotbar_total_time)
 			++hotbar_timer;
 		// dirty, but I haven't found the cause yet
-		for(uint i = 0; i < items.size(); ++i)
+		for(int i = 0; i < items.size(); ++i)
 			if(!items[i].item){
 				items.delete(i);
 				--i;
+				console.printf("deleted item at %d", i);
 			}
 	}
 

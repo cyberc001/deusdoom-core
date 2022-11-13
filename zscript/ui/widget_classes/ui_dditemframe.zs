@@ -26,7 +26,14 @@ class UI_DDItemFrame : UI_Widget
 	override void drawOverlay(RenderEvent e)
 	{
 		PlayerInfo plr = players[consoleplayer];
-		int cnt = plr.mo.countInv(item_cls);
+		int cnt = 0;
+		if(item_cls is "DDItem"){
+			DD_InventoryHolder ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
+			for(uint i = 0; i < ddih.items.size(); ++i)
+				if(ddih.items[i].item.GetClass() == item_cls)
+				{ cnt = ddih.items[i].amount; break; }
+		}
+		else cnt = plr.mo.countInv(item_cls);
 
 		UI_Draw.texture(frame_tex, x, y, frame_w, frame_h);
 		UI_Draw.texture(item_tex,
