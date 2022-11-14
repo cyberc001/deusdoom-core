@@ -250,7 +250,7 @@ class DD_EventHandler : DD_EventHandlerBase
 		/* Process hotbar slot binds */
 		bool block = false;
 		PlayerInfo plr = players[consoleplayer];
-		if(plr.mo){
+		if(e.type == UiEvent.Type_KeyDown && plr.mo){
 			let ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
 			if(ddih && e.Type == UIEvent.Type_KeyDown){
 				for(uint i = 1; i <= 10; ++i)
@@ -261,7 +261,15 @@ class DD_EventHandler : DD_EventHandlerBase
 						break;
 					}
 			}
+			if(e.keyScan && KeyBindUtils.checkBind(e.keyScan, "weapdrop")){
+				// handle dropping weapons before engine tries to handle it and crashes
+				for(uint i = 0; i < ddih.items.size(); ++i)
+					if(plr.readyWeapon && ddih.items[i].item == plr.readyWeapon){ 
+						EventHandler.SendNetworkEvent("dd_inventory_drop_item", i);
+					}
+			}
 		}
+
 
 		if(wndmgr)
 			if(wndmgr.inputProcess(e))
