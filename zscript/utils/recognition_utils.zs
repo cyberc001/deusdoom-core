@@ -449,8 +449,7 @@ class RecognitionUtils
 			if(findActorClass(inflictor, getInstance().isHandToHandDamage_Inflictor_wl))
 				return true;
 		}
-		if(damageMobjFlags & DMG_INFLICTOR_IS_PUFF && source && source.player){
-			// Hitscan attack, player probably has a weapon out
+		if(source && source.player){
 			if(source.player.readyWeapon)
 			{
 				if(findActorClass(source.player.readyWeapon, getInstance().isHandToHandDamage_Weapon_bl))
