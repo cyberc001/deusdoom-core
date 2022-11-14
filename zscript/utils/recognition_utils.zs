@@ -44,11 +44,19 @@ class RecognitionUtils
 	array<class<Actor> > drainsEnergy_Source_bl;
 	array<class<Actor> > drainsEnergy_Inflictor_wl;
 	array<class<Actor> > drainsEnergy_Inflictor_bl;
-	array<double > drainsEnergy_Source_amt;
-	array<double > drainsEnergy_Inflictor_amt;
+	array<double> drainsEnergy_Source_amt;
+	array<double> drainsEnergy_Inflictor_amt;
 
 	array<class<Actor> > displayedSonar_wl;
 	array<class<Actor> > displayedSonar_bl;
+
+	array<class<Actor> > isAffectedByStun_wl;
+	array<class<Actor> > isAffectedByStun_bl;
+	array<double> isAffectedByStun_ml;
+	
+	array<class<Actor> > isAffectedByEMP_wl;
+	array<class<Actor> > isAffectedByEMP_bl;
+	array<double> isAffectedByEMP_ml;
 
 	// Description:
 	// Should be called from an event handler's event onRegister().
@@ -185,6 +193,10 @@ class RecognitionUtils
 								drainsEnergy_Source_amt[drainsEnergy_Source_wl.size()-1] = (attr.mid(1).toDouble());
 							else if(prev_attr == "drainsEnergy_Inflictor")
 								drainsEnergy_Inflictor_amt[drainsEnergy_Inflictor_wl.size()-1] = (attr.mid(1).toDouble());
+							else if(prev_attr == "isAffectedByStun")
+								isAffectedByStun_ml[isAffectedByStun_wl.size()-1] = (attr.mid(1).toDouble());
+							else if(prev_attr == "isAffectedByEMP")
+								isAffectedByEMP_ml[isAffectedByEMP_wl.size()-1] = (attr.mid(1).toDouble());
 						}
 						else if(attr.byteAt(0) == ch("!"))
 						{ // blacklist
@@ -219,6 +231,10 @@ class RecognitionUtils
 								drainsEnergy_Inflictor_bl.push(actor_cls);
 							else if(attr == "displayedSonar")
 								displayedSonar_bl.push(actor_cls);
+							else if(attr == "isAffectedByStun")
+								isAffectedByStun_bl.push(actor_cls);
+							else if(attr == "isAffectedByEMP")
+								isAffectedByEMP_bl.push(actor_cls);
 							else
 								console.printf("[DeusDoom]ERROR: no attribute \"%s\" exists",
 										attr);
@@ -275,6 +291,14 @@ class RecognitionUtils
 							}
 							else if(attr == "displayedSonar")
 								displayedSonar_wl.push(actor_cls);
+							else if(attr == "isAffectedByStun"){
+								isAffectedByStun_wl.push(actor_cls);
+								isAffectedByStun_ml.push(1);
+							}
+							else if(attr == "isAffectedByEMP"){
+								isAffectedByEMP_wl.push(actor_cls);
+								isAffectedByEMP_ml.push(1);
+							}
 							else
 								console.printf("[DeusDoom]ERROR: no attribute \"%s\" exists",
 										attr);
@@ -627,6 +651,37 @@ class RecognitionUtils
 		if(findActorClass(obj, getInstance().displayedSonar_wl))
 			return 1;
 		return 0;
+	}
+
+	// Description:
+	// Used by Riot Prod / Pepper spray to determine whether the monster should be subject to their stun effects or not.
+	static bool isAffectedByStun(Actor obj, out double mult)
+	{
+		mult = 1;
+		if(findActorClass(obj, getInstance().isAffectedByStun_bl))
+			return false;
+
+		bool in_wl; uint wl_i;
+		[in_wl, wl_i] = findActorClass(obj, getInstance().isAffectedByStun_wl);
+		if(in_wl)
+			mult = getInstance().isAffectedByStun_ml[wl_i];
+		return true;
+	}
+
+	static bool isAffectedByEMP(Actor obj, out double mult)
+	{
+		mult = 1;
+		if(findActorClass(obj, getInstance().isAffectedByEMP_bl))
+			return false;
+
+		bool in_wl; uint wl_i;
+		[in_wl, wl_i] = findActorClass(obj, getInstance().isAffectedByEMP_wl);
+		if(in_wl){
+			mult = getInstance().isAffectedByEMP_ml[wl_i];
+			return true;
+		}
+
+		return obj.bISMONSTER && (obj.bBOSS || RecognitionUtils.isFooledByRadarTransparency(obj));
 	}
 }
 
