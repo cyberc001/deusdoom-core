@@ -473,10 +473,12 @@ class DD_InventoryHolder : Inventory
 
 	/* Hotbar slide up/down animations and visibility */
 	int hotbar_timer;
-	const hotbar_show_time = 20;
-	const hotbar_stay_time = 35*4;
-	const hotbar_hide_time = 20;
-	const hotbar_total_time = hotbar_show_time + hotbar_stay_time + hotbar_hide_time;
+	int hotbar_show_time;
+	int hotbar_stay_time;
+	int hotbar_hide_time;
+	int hotbar_total_time;
+	bool hotbar_always_stay;
+	bool hotbar_init;
 
 	override void BeginPlay()
 	{
@@ -484,19 +486,38 @@ class DD_InventoryHolder : Inventory
 	}
 	override void Tick()
 	{
-		if(hotbar_timer < hotbar_total_time)
+		if(!hotbar_init && owner)
+			updateHotbarCVars();
+
+		if(level.MapName == "TITLEMAP")
+			hotbar_timer = 0;
+		else if(hotbar_always_stay)
+			hotbar_timer = hotbar_show_time;
+		else if(hotbar_timer < hotbar_total_time)
 			++hotbar_timer;
 		// dirty, but I haven't found the cause yet
 		for(int i = 0; i < items.size(); ++i)
 			if(!items[i].item){
 				items.delete(i);
 				--i;
-				console.printf("deleted item at %d", i);
 			}
+	}
+
+	protected void updateHotbarCVars()
+	{
+		int prev_total_time = hotbar_total_time;
+		hotbar_show_time = CVar.GetCVar("dd_hotbar_show_time", owner.player).GetInt();
+		hotbar_stay_time = CVar.GetCVar("dd_hotbar_stay_time", owner.player).GetInt();
+		hotbar_hide_time = CVar.GetCVar("dd_hotbar_hide_time", owner.player).GetInt();
+		hotbar_total_time = hotbar_show_time + hotbar_stay_time + hotbar_hide_time;
+		if(prev_total_time != hotbar_total_time)
+			hotbar_timer = hotbar_total_time;
+		hotbar_always_stay = CVar.getCVar("dd_hotbar_always_stay", owner.player).GetBool();
 	}
 
 	void showHotbar()
 	{
+		updateHotbarCVars();
 		if(hotbar_timer >= hotbar_total_time)
 			hotbar_timer = 0;
 		else

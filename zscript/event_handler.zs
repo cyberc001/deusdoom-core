@@ -222,6 +222,8 @@ class DD_EventHandler : DD_EventHandlerBase
 				int yoff = ddih.hotbar_timer < ddih.hotbar_show_time ? 25 * (1 - double(ddih.hotbar_timer) / ddih.hotbar_show_time)
 						: ddih.hotbar_timer > ddih.hotbar_show_time + ddih.hotbar_stay_time ? 25 * (double(ddih.hotbar_timer - ddih.hotbar_show_time - ddih.hotbar_stay_time) / (ddih.hotbar_hide_time))
 						: 0;
+				if(ddih.hotbar_total_time == 0)
+					yoff = 25;
 				UI_Draw.texture(hotbar_bg, 160 - UI_Draw.texWidth(hotbar_bg, 0, 25)/2, 175 + yoff, 0, 25);
 				UI_Draw.texture(hotbar_frame, 160 - UI_Draw.texWidth(hotbar_frame, 0, 25)/2, 175 + yoff, 0, 25);
 				for(uint i = 0; i < DD_InventoryHolder.hotbar_size; ++i){

@@ -39,6 +39,18 @@ OptionMenu "DD_Options"
 	{
 		StaticText "DeusDoom interface settings", Purple
 		StaticText ""
+		StaticText "These are settings that affect hotbar hide/show animation", Green
+		StaticText "and amount of time it stays on screen.", Green
+		StaticText ""
+		StaticText "CVAR: dd_hotbar_show_time", DarkGray
+		Slider "Hotbar show time", "dd_hotbar_show_time", 0, 70, 1
+		StaticText "CVAR: dd_hotbar_stay_time", DarkGray
+		Slider "Hotbar stay time", "dd_hotbar_stay_time", 0, 350, 1
+		StaticText "CVAR: dd_hotbar_hide_time", DarkGray
+		Slider "Hotbar hide time", "dd_hotbar_hide_time", 0, 70, 1
+		StaticText "CVAR: dd_hotbar_always_stay", DarkGray
+		Option "Always show hotbar", "dd_hotbar_always_stay", "OnOff"
+		StaticText ""
 	}
 	OptionMenu "DD_Settings_Visual"
 	{
