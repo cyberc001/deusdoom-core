@@ -247,8 +247,7 @@ class DD_InventoryHolder : Inventory
 					wrap.x = x; wrap.y = y;
 					if(checkItemSpace(wrap)){
 						items.push(wrap);
-						if(item is "Weapon") item.AttachToOwner(owner);
-						else item.owner = owner;
+						item.AttachToOwner(owner);
 						// make a hotbar bind
 						int prevslot = findHotbarSlot(wrap);
 						if(prevslot == -1){
