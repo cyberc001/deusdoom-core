@@ -267,7 +267,8 @@ class DD_EventHandler : DD_EventHandlerBase
 				// handle dropping weapons before engine tries to handle it and crashes
 				for(uint i = 0; i < ddih.items.size(); ++i)
 					if(plr.readyWeapon && ddih.items[i].item == plr.readyWeapon){ 
-						EventHandler.SendNetworkEvent("dd_inventory_drop_item", i);
+						EventHandler.SendNetworkEvent("dd_inventory_drop_item", i, 1);
+						break;
 					}
 			}
 		}
@@ -324,8 +325,9 @@ class DD_EventHandler : DD_EventHandlerBase
 				ddih.useItem(ddih.items[e.args[0]], ddih.items[e.args[1]]);
 		} else if(e.name == "dd_inventory_drop_item"){
 			let ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
-			if(e.args[0] < ddih.items.size())
-				ddih.dropItem(ddih.items[e.args[0]]);
+			if(e.args[0] < ddih.items.size()){
+				ddih.dropItem(ddih.items[e.args[0]], e.args[1] == 0 ? 1 : 999999);
+			}
 		} else if(e.name == "dd_inventory_equip_item"){
 			let ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
 			if(e.args[0] < ddih.items.size())

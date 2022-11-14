@@ -362,35 +362,42 @@ class DD_InventoryHolder : Inventory
 			hotbar[prevslot] = null;
 	}
 
-	void dropItem(DD_InventoryWrapper item)
+	void dropItem(DD_InventoryWrapper item, uint amt = 1)
 	{
 		Actor _owner = item.item.owner;
-		++item.item.amount;
-		let drop = item.item.createTossable(1);
-		if(drop){
-			drop.warp(_owner, 50 + frandom(-5, 10), frandom(-10, 10), _owner.player ? _owner.player.viewHeight : _owner.height / 1.5);
-			--item.amount;
-			if(!item.amount){
-				int prevslot = findHotbarSlot(item);
-				if(prevslot != -1)
-					hotbar[prevslot] = null;
-				_owner.takeInventory(item.item.getClass(), 999999);
-				uint ind = items.find(item);
-				items.delete(ind);
+		if(amt > item.amount)
+			amt = item.amount;
+		for(uint i = 0; i < amt; ++i){
+			++item.item.amount;
+			let drop = item.item.createTossable(1);
+			if(drop){
+				drop.warp(_owner, 50 + frandom(-5, 10), frandom(-10, 10), _owner.player ? _owner.player.viewHeight : _owner.height / 1.5);
+				--item.amount;
+				if(!item.amount){
+					int prevslot = findHotbarSlot(item);
+					if(prevslot != -1)
+						hotbar[prevslot] = null;
+					_owner.takeInventory(item.item.getClass(), 999999);
+					uint ind = items.find(item);
+					items.delete(ind);
+					break;
+				}
 			}
-		}
-		else{
-			--item.item.amount;
-			drop = Inventory(Inventory.Spawn(item.item.getClass()));
-			drop.warp(_owner, 50 + frandom(-5, 10), frandom(-10, 10), _owner.player ? _owner.player.viewHeight : _owner.height / 1.5);
-			--item.amount;
-			if(!item.amount){
-				int prevslot = findHotbarSlot(item);
-				if(prevslot != -1)
-					hotbar[prevslot] = null;
-				_owner.takeInventory(item.item.getClass(), 999999);
-				uint ind = items.find(item);
-				items.delete(ind);
+			else{
+				--item.item.amount ;
+				drop = Inventory(Inventory.Spawn(item.item.getClass()));
+				drop.warp(_owner, 50 + frandom(-5, 10), frandom(-10, 10), _owner.player ? _owner.player.viewHeight : _owner.height / 1.5);
+				--item.amount;
+				if(item.amount < 0) item.amount = 0;
+				if(!item.amount){
+					int prevslot = findHotbarSlot(item);
+					if(prevslot != -1)
+						hotbar[prevslot] = null;
+					_owner.takeInventory(item.item.getClass(), 999999);
+					uint ind = items.find(item);
+					items.delete(ind);
+					break;
+				}
 			}
 		}
 	}
