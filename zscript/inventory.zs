@@ -87,6 +87,12 @@ class DD_InventoryPickupWrapper : Inventory
 {
 	Inventory item;
 
+	default
+	{
+		+DONTGIB;
+		+THRUACTORS;
+	}
+
 	void init(Inventory _item)
 	{
 		item = _item;
