@@ -46,7 +46,7 @@ class DDSpawner : Actor
 			uint ch = random(0, ch_sum);
 			ch_sum = 0;
 			for(uint j = 0; j < actors.size(); ++j){
-				if(ch_sum + chances[j] > ch || actors.size() == 1){
+				if(ch_sum + chances[j] > ch || j == actors.size() - 1){
 					if(flags[j] & FLAG_DONTDUP){
 						bool everyone_got_item = true;
 						for(int i = 0; i < MAXPLAYERS; ++i)
