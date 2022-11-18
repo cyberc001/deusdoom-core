@@ -301,8 +301,10 @@ class DD_InventoryHolder : Inventory
 			while(wrap = getAnyItemInRect(item.x, item.y, item.w, item.h)){
 				uint look_i = looked.find(wrap);
 				if(look_i != looked.size()){
-					looked[look_i].x = looked_x[look_i];
-					looked[look_i].y = looked_y[look_i];
+					for(uint i = 0; i < looked.size(); ++i){
+						looked[i].x = looked_x[i];
+						looked[i].y = looked_y[i];
+					}
 					items.push(item);
 					item.x = item_x; item.y = item_y;
 					return false;
