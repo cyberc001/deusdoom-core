@@ -119,6 +119,8 @@ class DD_InventoryPickupWrapper : Inventory
 			if(item is "Ammo" || (item is "DDItem" && !DDItem(item).stay_in_inventory)){
 				if(user.GiveInventory(item.GetClass(), item.Amount)){
 					user.A_StartSound("DDItem/item_pickup", CHANF_LOCAL);
+					if(user.player && players[consoleplayer] == user.player)
+						console.printf("%s", item.PickupMessage());
 					item.destroy();
 					destroy();
 					return true;
@@ -126,6 +128,8 @@ class DD_InventoryPickupWrapper : Inventory
 			}
 			else if(ddih.addItem(item)){
 				user.A_StartSound(item.PickupSound, CHANF_LOCAL);
+				if(user.player && players[consoleplayer] == user.player)
+					console.printf("%s", item.PickupMessage());
 				item.warp(owner);
 				item.A_ChangeLinkFlags(1, 1);
 				name dts = "DDWeapon_DragonsToothSword";
