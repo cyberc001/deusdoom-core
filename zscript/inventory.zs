@@ -97,13 +97,18 @@ class DD_InventoryPickupWrapper : Inventory
 	{
 		item = _item;
 		item.bTHRUACTORS = true;
+		prev_item_pos = _item.pos;
 	}
 
+	vector3 prev_item_pos;
 	override void Tick()
 	{
 		if(!item || item.owner) { destroy(); return; }
-		if(item && item.vel.length() > 0)
-			Warp(item);
+		if(item){
+			if(item.pos != prev_item_pos)
+				Warp(item);
+			prev_item_pos = item.pos;
+		}
 	}
 
 	override bool Used(Actor user)
