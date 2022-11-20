@@ -84,6 +84,7 @@ class DD_EventHandler : DD_EventHandlerBase
 		ddih.GiveInventory("DD_SkillPoints", 4050);
 	}
 
+	bool performance_inventory_wrapper;
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		name ddwepcls = "DDWeapon";
@@ -94,7 +95,7 @@ class DD_EventHandler : DD_EventHandlerBase
 		if(((ddwepcls && e.thing is ddwepcls) || e.thing is "DDItem" || e.thing is "Ammo"
 			|| (ddcellcls && e.thing is ddcellcls) || (ddaugcancls && e.thing is ddaugcancls) || (ddaugupgrcls && e.thing is ddaugupgrcls) || (ddauglegdcls && e.thing is ddauglegdcls))
 			&& !(e.thing is "DD_InventoryPickupWrapper")){
-			let wrap = DD_InventoryPickupWrapper(Actor.Spawn("DD_InventoryPickupWrapper", e.thing.pos));
+			let wrap = DD_InventoryPickupWrapper(Actor.Spawn(performance_inventory_wrapper ? "DD_InventoryPickupWrapperPerformance" : "DD_InventoryPickupWrapper", e.thing.pos));
 			wrap.init(Inventory(e.thing));
 		}
 	}
@@ -184,8 +185,9 @@ class DD_EventHandler : DD_EventHandlerBase
 				height_dist_coff *= pickup_tracer.hit_actor ? 2 : 1;
 				radius_dist_coff *= pickup_tracer.hit_actor ? 2 : 1;
 
+				Actor rend_obj = pickup_tracer.hit_obj.item ? Actor(pickup_tracer.hit_obj.item) : Actor(pickup_tracer.hit_obj);
 				// Left top
-				proj_scr.projectWorldPos(hit_obj.pos + (0, 0, hit_obj.height / 2));
+				proj_scr.projectWorldPos(rend_obj.pos + (0, 0, hit_obj.height / 2));
 				obj_norm = proj_scr.projectToNormal();
 				ind_pos = vwport.sceneToWindow(obj_norm);
 				if(!vwport.isInside(obj_norm) || !proj_scr.isInScreen())
@@ -399,6 +401,7 @@ class DD_EventHandler : DD_EventHandlerBase
 	override void WorldLoaded(WorldEvent e)
 	{
 		skill_utils.updateSkillPointsMult();
+		performance_inventory_wrapper = CVar.GetCVar("dd_performance_inventory_wrapper").GetBool();
 	}
 
 	// Keep track of previous level secret amount

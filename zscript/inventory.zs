@@ -149,6 +149,11 @@ class DD_InventoryPickupWrapper : Inventory
 	override bool canPickup(Actor toucher) { return false; }
 }
 
+class DD_InventoryPickupWrapperPerformance : DD_InventoryPickupWrapper
+{
+	override void Tick() {}
+}
+
 class DD_InventoryPickupTracer : LineTracer
 {
 	Actor source;

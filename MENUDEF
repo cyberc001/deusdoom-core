@@ -27,7 +27,8 @@ OptionMenu "DD_Options"
 		Submenu		"Control scheme",		"DD_Settings_ControlScheme"
 		Submenu		"Interface",			"DD_Settings_Interface"
 		Submenu		"Visual settings",		"DD_Settings_Visual"
-		Submenu		"Gameplay",			"DD_Settings_Gameplay"
+		Submenu		"Gameplay",				"DD_Settings_Gameplay"
+		Submenu		"Performance",			"DD_Settings_Performance"
 	}
 
 	OptionMenu "DD_Settings_ControlScheme"
@@ -68,6 +69,21 @@ OptionMenu "DD_Options"
 		StaticText "Changes are applied after loading/exiting a level.", Green
 		StaticText "CVAR: dd_skill_award_mult", DarkGray
 		Slider "Skill points multiplier", "dd_skill_award_mult", 0.05, 10.0, 0.05, 2
+		StaticText ""
+	}
+	OptionMenu "DD_Settings_Performance"
+	{
+		StaticText "DeusDoom performance settings", Purple
+		StaticText ""
+		StaticText "Performance inventory pickup wrapper", Purple
+		StaticText "Enabling this on can noticeably increase performance on maps with", Green
+		StaticText "huge amount of ammo and/or weapon pickups, but may introduce glitches,", Green
+		StaticText "mostly in form of pickup hitbox not following the item around if it's", Green
+		StaticText "being moved around by a conveyor/gravity field aug or being teleported.", Green
+		StaticText "Though most glitches should not lead to a VM abort.", Green
+		StaticText "APPLIED ONLY ON INITIAL LEVEL LOAD. MAKE SURE TO SAVE BEFORE ENTERING A NEW LEVEL.", Green
+		StaticText "CVar: dd_performance_inventory_wrapper", DarkGray
+		Option "Enable performance inventory pickup wrapper", "dd_performance_inventory_wrapper", "OnOff"
 		StaticText ""
 	}
 
