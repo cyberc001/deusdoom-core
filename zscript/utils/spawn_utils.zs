@@ -77,6 +77,8 @@ class DDSpawner : Actor
 		
 		for(uint i = 0; i < spawn_along.size(); ++i)
 			Actor.Spawn(spawn_along[i], pos);
+
+		destroy();
 	}
 }
 

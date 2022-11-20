@@ -104,11 +104,10 @@ class DD_InventoryPickupWrapper : Inventory
 	override void Tick()
 	{
 		if(!item || item.owner) { destroy(); return; }
-		if(item)
-			if(item.pos != prev_item_pos){
-				Warp(item);
-				prev_item_pos = item.pos;
-			}
+		if(item.pos != prev_item_pos){
+			Warp(item);
+			prev_item_pos = item.pos;
+		}
 	}
 
 	override bool Used(Actor user)
