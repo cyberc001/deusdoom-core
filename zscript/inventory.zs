@@ -151,6 +151,11 @@ class DD_InventoryPickupWrapper : Inventory
 
 class DD_InventoryPickupWrapperPerformance : DD_InventoryPickupWrapper
 {
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		ChangeStatNum(0);
+	}
 	override void Tick() {}
 }
 
