@@ -34,6 +34,7 @@ class DD_SkillPoints : Inventory
 		Inventory.Amount 1;
 		Inventory.MaxAmount 999999;
 		Inventory.InterHubAmount 999999;
+		+Inventory.UNDROPPABLE;
 	}
 }
 
