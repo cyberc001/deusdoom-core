@@ -1,6 +1,7 @@
 server float dd_skill_award_mult = 1.0;
 
 server bool dd_performance_inventory_wrapper = false;
+server bool dd_disable_pickup_wrapper_for_other_ammo = false;
 
 user int dd_hotbar_show_time = 20;
 user int dd_hotbar_stay_time = 140;

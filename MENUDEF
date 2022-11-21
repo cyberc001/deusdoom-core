@@ -70,6 +70,10 @@ OptionMenu "DD_Options"
 		StaticText "CVAR: dd_skill_award_mult", DarkGray
 		Slider "Skill points multiplier", "dd_skill_award_mult", 0.05, 10.0, 0.05, 2
 		StaticText ""
+		StaticText "Disable use to pickup for other mods' ammo types", Purple
+		StaticText "Doesn't affect ammo from [DeusDoom: Weapons].", Green
+		StaticText "Applied only on level load.", Green
+		Option "Disable use to pickup for other ammo", "dd_disable_pickup_wrapper_for_other_ammo", "OnOff"
 	}
 	OptionMenu "DD_Settings_Performance"
 	{

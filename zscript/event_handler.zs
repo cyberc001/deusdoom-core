@@ -66,6 +66,7 @@ class DD_EventHandler : DD_EventHandlerBase
 	}
 
 	bool performance_inventory_wrapper;
+	bool disable_pickup_wrapper_for_other_ammo;
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		name ddwepcls = "DDWeapon";
@@ -73,7 +74,7 @@ class DD_EventHandler : DD_EventHandlerBase
 		name ddaugcancls = "DD_AugmentationCanister";
 		name ddaugupgrcls = "DD_AugmentationUpgradeCanister";
 		name ddauglegdcls = "DD_AugmentationUpgradeCanisterLegendary";
-		if(((ddwepcls && e.thing is ddwepcls) || e.thing is "DDItem" || e.thing is "Ammo"
+		if(((ddwepcls && e.thing is ddwepcls) || e.thing is "DDItem" || (e.thing is "Ammo" && (!dd_disable_pickup_wrapper_for_other_ammo || e.thing.bTHRUACTORS))
 			|| (ddcellcls && e.thing is ddcellcls) || (ddaugcancls && e.thing is ddaugcancls) || (ddaugupgrcls && e.thing is ddaugupgrcls) || (ddauglegdcls && e.thing is ddauglegdcls))
 			&& !(e.thing is "DD_InventoryPickupWrapper")){
 			let wrap = DD_InventoryPickupWrapper(Actor.Spawn(performance_inventory_wrapper ? "DD_InventoryPickupWrapperPerformance" : "DD_InventoryPickupWrapper", e.thing.pos));
@@ -404,6 +405,7 @@ class DD_EventHandler : DD_EventHandlerBase
 		world_ticks = 0;
 		skill_utils.updateSkillPointsMult();
 		performance_inventory_wrapper = CVar.GetCVar("dd_performance_inventory_wrapper").GetBool();
+		disable_pickup_wrapper_for_other_ammo = CVar.GetCVar("dd_disable_pickup_wrapper_for_other_ammo").GetBool();
 	}
 	override void NewGame()
 	{
