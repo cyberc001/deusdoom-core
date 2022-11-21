@@ -226,6 +226,7 @@ class DD_InventoryHolder : Inventory
 	default
 	{
 		Inventory.InterHubAmount 1;
+		+Inventory.UNDROPPABLE;
 		+DONTGIB;
 		+THRUACTORS;
 	}

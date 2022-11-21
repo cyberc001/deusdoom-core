@@ -82,30 +82,27 @@ class DD_EventHandler : DD_EventHandlerBase
 		}
 	}
 
-	int world_ticks;
 	override void worldTick()
 	{
 		self.isUIProcessor = queue.qstate;
 		self.requireMouse = queue.qstate;
 
-		++world_ticks;
-		if(world_ticks > 2)
-			for(uint i = 0; i < MAXPLAYERS; ++i){
-				if(!playeringame[i] || !players[i].mo)
-					continue;
+		for(uint i = 0; i < MAXPLAYERS; ++i){
+			if(!playeringame[i] || !players[i].mo)
+				continue;
 	
-				PlayerPawn plr = players[i].mo;
-				if(plr.countInv("DD_SkillState") == 0){
-					DD_SkillState skst = DD_SkillState(Inventory.Spawn("DD_SkillState"));
-					plr.addInventory(skst);
-				}
-	
-				if(plr.countInv("DD_InventoryHolder") == 0){
-					DD_InventoryHolder ddih = DD_InventoryHolder(Inventory.Spawn("DD_InventoryHolder"));
-					plr.addInventory(ddih);
-					ddih.GiveInventory("DD_SkillPoints", 4050);
-				}
+			PlayerPawn plr = players[i].mo;
+			if(plr.countInv("DD_SkillState") == 0){
+				DD_SkillState skst = DD_SkillState(Inventory.Spawn("DD_SkillState"));
+				plr.addInventory(skst);
 			}
+	
+			if(plr.countInv("DD_InventoryHolder") == 0){
+				DD_InventoryHolder ddih = DD_InventoryHolder(Inventory.Spawn("DD_InventoryHolder"));
+				plr.addInventory(ddih);
+				ddih.GiveInventory("DD_SkillPoints", 4050);
+			}
+		}
 	}
 	
 	// Inventory pickup projections
@@ -402,14 +399,9 @@ class DD_EventHandler : DD_EventHandlerBase
 	}
 	override void WorldLoaded(WorldEvent e)
 	{
-		world_ticks = 0;
 		skill_utils.updateSkillPointsMult();
 		performance_inventory_wrapper = CVar.GetCVar("dd_performance_inventory_wrapper").GetBool();
 		disable_pickup_wrapper_for_other_ammo = CVar.GetCVar("dd_disable_pickup_wrapper_for_other_ammo").GetBool();
-	}
-	override void NewGame()
-	{
-		world_ticks = 0;
 	}
 
 	// Keep track of previous level secret amount
