@@ -65,25 +65,6 @@ class DD_EventHandler : DD_EventHandlerBase
 		proj_gl = new("DDLe_GLScreen");
 	}
 
-	override void playerSpawned(PlayerEvent e)
-	{
-		PlayerPawn plr = players[e.PlayerNumber].mo;
-		DD_SkillState skst = DD_SkillState(Inventory.Spawn("DD_SkillState"));
-		if(plr.countInv("DD_SkillState") == 0)
-			plr.addInventory(skst);
-		else
-			skst.destroy();
-
-		DD_InventoryHolder ddih = DD_InventoryHolder(Inventory.Spawn("DD_InventoryHolder"));
-		if(plr.countInv("DD_InventoryHolder") == 0)
-			plr.addInventory(ddih);
-		else{
-			ddih.destroy();
-			ddih = DD_InventoryHolder(plr.FindInventory("DD_InventoryHolder"));
-		}
-		ddih.GiveInventory("DD_SkillPoints", 4050);
-	}
-
 	bool performance_inventory_wrapper;
 	override void WorldThingSpawned(WorldEvent e)
 	{
@@ -104,6 +85,23 @@ class DD_EventHandler : DD_EventHandlerBase
 	{
 		self.isUIProcessor = queue.qstate;
 		self.requireMouse = queue.qstate;
+
+		for(uint i = 0; i < MAXPLAYERS; ++i){
+			if(!playeringame[i] || !players[i].mo)
+				continue;
+
+			PlayerPawn plr = players[i].mo;
+			if(plr.countInv("DD_SkillState") == 0){
+				DD_SkillState skst = DD_SkillState(Inventory.Spawn("DD_SkillState"));
+				plr.addInventory(skst);
+			}
+
+			if(plr.countInv("DD_InventoryHolder") == 0){
+				DD_InventoryHolder ddih = DD_InventoryHolder(Inventory.Spawn("DD_InventoryHolder"));
+				plr.addInventory(ddih);
+				ddih.GiveInventory("DD_SkillPoints", 4050);
+			}
+		}
 	}
 
 	// Inventory pickup projections
