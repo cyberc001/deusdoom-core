@@ -43,8 +43,19 @@ class UI_DDInventoryDisplay : UI_Widget
 				UI_Draw.texture(select_rect, x + selected_item.x * 22, y + selected_item.y * 22 - 0.5, 22 * selected_item.w, 22 * selected_item.h);
 		}
 
-		// render all the items
 		name ddwepcls = "DDWeapon";
+		// render green tint over weapons to which grabbed weapon mod is applicable to
+		if(grabbed_item && grabbed_item.item is "DDItem"){
+			for(uint i = 0; i < ddih.items.size(); ++i){
+				Inventory item = ddih.items[i].item;
+				DD_InventoryWrapper wrap = ddih.items[i];
+				if(!(item is ddwepcls) || !DDItem(grabbed_item.item).isApplicable(item))
+					continue;
+				UI_Draw.texture(wepmod_overlay, x + wrap.x * 22, y + wrap.y * 22 - 0.5, 22 * wrap.w, 22 * wrap.h);
+			}	
+		}
+
+		// render all the items
 		for(uint i = 0; i < ddih.items.size(); ++i){
 			if(ddih.items[i] == grabbed_item)
 				continue;
@@ -66,17 +77,6 @@ class UI_DDInventoryDisplay : UI_Widget
 			int hbslot = ddih.findHotbarSlot(wrap);
 			if(hbslot != -1)
 				UI_draw.str(font, String.Format("%d", hbslot + 1 == 10 ? 0 : hbslot + 1), 0xFFFFFF, x - 4 + wrap.w * 22 + wrap.x * 22, y + 2 + wrap.y * 22, 0, 3.5);
-		}
-
-		// render green tint over weapons to which grabbed weapon mod is applicable to
-		if(grabbed_item && grabbed_item.item is "DDItem"){
-			for(uint i = 0; i < ddih.items.size(); ++i){
-				Inventory item = ddih.items[i].item;
-				DD_InventoryWrapper wrap = ddih.items[i];
-				if(!(item is ddwepcls) || !DDItem(grabbed_item.item).isApplicable(item))
-					continue;
-				UI_Draw.texture(wepmod_overlay, x + wrap.x * 22, y + wrap.y * 22 - 0.5, 22 * wrap.w, 22 * wrap.h);
-			}	
 		}
 
 		// render currently grabbed item
