@@ -231,6 +231,8 @@ class DD_EventHandler : DD_EventHandlerBase
 					if(ddih.hotbar[i]){
 						DD_InventoryWrapper wrap = ddih.hotbar[i];
 						Inventory item = wrap.item;
+						if(!item)
+							continue;
 						UI_Draw.texture(wrap.item.AltHUDIcon, 171.5 - UI_Draw.texWidth(hotbar_bg, 0, 25)/2 - UI_Draw.texWidth(wrap.item.AltHUDIcon, 0, 12)/2 + 18.2*i, 179 + yoff, 0, 12);
 						string str = " ";
 						if(!ddwepcls || !(item is ddwepcls) || (!Weapon(item).AmmoType1 && wrap.amount > 1)) str = string.format("Count: %d", wrap.amount);
