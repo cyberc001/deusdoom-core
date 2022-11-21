@@ -185,7 +185,7 @@ class DD_EventHandler : DD_EventHandlerBase
 				height_dist_coff *= pickup_tracer.hit_actor ? 2 : 1;
 				radius_dist_coff *= pickup_tracer.hit_actor ? 2 : 1;
 
-				Actor rend_obj = pickup_tracer.hit_obj.item ? Actor(pickup_tracer.hit_obj.item) : Actor(pickup_tracer.hit_obj);
+				Actor rend_obj = pickup_tracer.hit_obj ? (pickup_tracer.hit_obj.item ? Actor(pickup_tracer.hit_obj.item) : hit_obj) : hit_obj;
 				// Left top
 				proj_scr.projectWorldPos(rend_obj.pos + (0, 0, hit_obj.height / 2));
 				obj_norm = proj_scr.projectToNormal();
