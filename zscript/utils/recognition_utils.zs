@@ -260,7 +260,7 @@ class RecognitionUtils
 							else if(attr == "isHandToHandDamage_Weapon")
 								isHandToHandDamage_Weapon_wl.push(actor_cls);
 							else if(attr == "isHandToHandDamage_Inflictor")
-								isHandToHandDamage_Weapon_wl.push(actor_cls);
+								isHandToHandDamage_Inflictor_wl.push(actor_cls);
 							else if(attr == "damageIsEnergy_Source"){
 								damageIsEnergy_Source_wl.push(actor_cls);
 								damageIsEnergy_Source_protfact_ml.push(1.0);
