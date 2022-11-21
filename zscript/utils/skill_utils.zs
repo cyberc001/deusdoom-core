@@ -55,7 +55,10 @@ class SkillUtils
 
 	int getPlayerSkillLevel(PlayerPawn pp, int skill_id)
 	{
-		return DD_SkillState(pp.findInventory("DD_SkillState")).skill_levels[skill_id];
+		let skst = DD_SkillState(pp.findInventory("DD_SkillState"));
+		if(skst)
+			return skst.skill_levels[skill_id];
+		return 0;
 	}
 
 	bool canUpgradeSkill(PlayerPawn pp, int skill_id)
