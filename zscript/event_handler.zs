@@ -235,17 +235,17 @@ class DD_EventHandler : DD_EventHandlerBase
 					if(ddih.hotbar[i]){
 						DD_InventoryWrapper wrap = ddih.hotbar[i];
 						Inventory item = wrap.item;
-						if(!item)
-							continue;
-						UI_Draw.texture(wrap.item.AltHUDIcon, 171.5 - UI_Draw.texWidth(hotbar_bg, 0, 25)/2 - UI_Draw.texWidth(wrap.item.AltHUDIcon, 0, 12)/2 + 18.2*i, 179 + yoff, 0, 12);
-						string str = " ";
-						if(!ddwepcls || !(item is ddwepcls) || (!Weapon(item).AmmoType1 && wrap.amount > 1)) str = string.format("Count: %d", wrap.amount);
-							else if(ddwepcls){
-							Inventory ammo = item.owner.findInventory(Weapon(item).AmmoType1);
-							if(ammo) str = ammo.getTag(ammo.getClassName());
-							else str = " ";
+						if(item){
+							UI_Draw.texture(wrap.item.AltHUDIcon, 171.5 - UI_Draw.texWidth(hotbar_bg, 0, 25)/2 - UI_Draw.texWidth(wrap.item.AltHUDIcon, 0, 12)/2 + 18.2*i, 179 + yoff, 0, 12);
+							string str = " ";
+							if(!ddwepcls || !(item is ddwepcls) || (!Weapon(item).AmmoType1 && wrap.amount > 1)) str = string.format("Count: %d", wrap.amount);
+								else if(ddwepcls){
+								Inventory ammo = item.owner.findInventory(Weapon(item).AmmoType1);
+								if(ammo) str = ammo.getTag(ammo.getClassName());
+								else str = " ";
+							}
+							UI_Draw.str(aug_ui_font, str, 0xFFFFFF, 172 - UI_draw.texWidth(hotbar_bg, 0, 25)/2 - UI_Draw.strWidth(aug_ui_font, str, 0, 2)/2 + 18.2*i, 192 + yoff, 0, 2);
 						}
-						UI_Draw.str(aug_ui_font, str, 0xFFFFFF, 172 - UI_draw.texWidth(hotbar_bg, 0, 25)/2 - UI_Draw.strWidth(aug_ui_font, str, 0, 2)/2 + 18.2*i, 192 + yoff, 0, 2);
 					}
 					UI_Draw.str(aug_ui_font, String.format("%u", i + 1 == 10 ? 0 : i + 1), 0xFFFFFF, 176 - UI_draw.texWidth(hotbar_bg, 0, 25)/2 + 18.2*i, 179 + yoff, 0, 3.5);
 				}
