@@ -113,6 +113,10 @@ class DD_InventoryPickupWrapper : Inventory
 	override bool Used(Actor user)
 	{
 		let ddih = DD_InventoryHolder(user.FindInventory("DD_InventoryHolder"));
+		if(!item){
+			destroy();
+			return false;
+		}
 		if(item.Amount == 0){
 			item.TryPickUp(user);
 			item.destroy();
