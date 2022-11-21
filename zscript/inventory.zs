@@ -435,10 +435,14 @@ class DD_InventoryHolder : Inventory
 
 	void equipItem(DD_InventoryWrapper item)
 	{ // either switches to the weapon or brings up a fake weapon that uses the item on primary fire
+		if(!item || !item.item)
+			return;
 		if(item.item is "Weapon"){
 			item.item.owner.UseInventory(item.item);
 		}
 		else{
+			if(!item.item.owner)
+				return;
 			item.item.owner.giveInventory("DD_InventoryUseWeapon", 1);
 			let usewep = DD_InventoryUseWeapon(item.item.owner.findInventory("DD_InventoryUseWeapon"));
 			usewep.item = item;
