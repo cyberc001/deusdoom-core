@@ -92,10 +92,11 @@ class DD_EventHandler : DD_EventHandlerBase
 				continue;
 	
 			PlayerPawn plr = players[i].mo;
-			int skcnt = plr.countInv("DD_SkillState");
-			if(skcnt == 0){
+			if(plr.countInv("DD_SkillState") == 0){
 				DD_SkillState skst = DD_SkillState(Inventory.Spawn("DD_SkillState"));
 				plr.addInventory(skst);
+				plr.takeInventory("DD_SkillPoints", 999999999);
+				plr.GiveInventory("DD_SkillPoints", 4050);
 			}
 
 			DD_InventoryHolder ddih = DD_InventoryHolder(plr.findInventory("DD_InventoryHolder"));
@@ -104,8 +105,6 @@ class DD_EventHandler : DD_EventHandlerBase
 				plr.addInventory(ddih);
 			}
 
-			if(skcnt == 0 && plr.countInv("DD_SkillPoints") == 0)
-				ddih.GiveInventory("DD_SkillPoints", 4050);
 		}
 	}
 	

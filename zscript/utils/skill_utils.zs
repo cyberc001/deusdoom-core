@@ -65,6 +65,8 @@ class SkillUtils
 	bool canUpgradeSkill(PlayerPawn pp, int skill_id)
 	{
 		DD_SkillState skst = DD_SkillState(pp.findInventory("DD_SkillState"));
+		if(!skst)
+			return false;
 		DD_Skill sk = getSkill(skill_id);
 		return skst.skill_levels[skill_id] < 3 && sk.level_cost[skst.skill_levels[skill_id]] <= pp.countInv("DD_SkillPoints");
 	}
