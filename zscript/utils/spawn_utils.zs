@@ -136,14 +136,18 @@ class SpawnUtils
 				plr.TakeInventory(n, 1);
 				while(cnt > 0){
 					Inventory item = Inventory(Inventory.Spawn(inventory_repls[j].replacement, plr.pos));
-					if(!(item is "Ammo"))
-						ddih.addItem(item); // if it fails, spawned item will still be on the ground
-					else{
-						item.destroy();
-						Name n2 = inventory_repls[j].replacement.getClassName();
-						plr.GiveInventory(n2, 1); 
-						break;
+					if(!(item is "DDSpawner")){
+						if(!(item is "Ammo"))
+							ddih.addItem(item); // if it fails, spawned item will still be on the ground
+						else{
+							item.destroy();
+							Name n2 = inventory_repls[j].replacement.getClassName();
+							plr.GiveInventory(n2, 1); 
+							break;
+						}
 					}
+					else
+						break;
 					--cnt;
 				}
 			}
