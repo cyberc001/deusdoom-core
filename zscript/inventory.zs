@@ -127,7 +127,8 @@ class DD_InventoryPickupWrapper : Inventory
 			if(item is "Ammo" || (item is "DDItem" && !DDItem(item).stay_in_inventory)){
 				if(user.GiveInventory(item.GetClass(), item.Amount)){
 					user.A_StartSound("DDItem/item_pickup", CHANF_LOCAL);
-					if(user.player && players[consoleplayer] == user.player)
+					if(user.player && players[consoleplayer] == user.player
+						&& item.PickupMessage().IndexOf("$") != 0)
 						console.printf("%s", item.PickupMessage());
 					item.destroy();
 					destroy();
@@ -136,7 +137,8 @@ class DD_InventoryPickupWrapper : Inventory
 			}
 			else if(ddih.addItem(item)){
 				user.A_StartSound(item.PickupSound, CHANF_LOCAL);
-				if(user.player && players[consoleplayer] == user.player)
+				if(user.player && players[consoleplayer] == user.player
+					&& item.PickupMessage().IndexOf("$") != 0)
 					console.printf("%s", item.PickupMessage());
 				item.warp(owner);
 				item.A_ChangeLinkFlags(1, 1);
@@ -453,9 +455,11 @@ class DD_InventoryHolder : Inventory
 
 	/* Inventory descriptors */
 
-	static void addItemDescriptor(name item_cls, int item_w = 1, int item_h = 1, int max_stack = 8, double icon_x = 0, double icon_y = 0, double icon_mulh = 1, string description = " ")
+	static void addItemDescriptor(name item_cls, int item_w = 1, int item_h = 1, int max_stack = 8, double icon_x = 0, double icon_y = 0, double icon_mulh = 1, string description = " ", DD_EventHandler _ddeh = null)
 	{
 		let ddeh = DD_EventHandler(StaticEventHandler.Find("DD_EventHandler"));
+		if(!ddeh)
+			ddeh = _ddeh;
 		let desc = DD_InventoryWrapper(new("DD_InventoryWrapper"));
 		desc.item_cls = item_cls;
 		desc.w = item_w; desc.h = item_h;
@@ -489,6 +493,16 @@ class DD_InventoryHolder : Inventory
 		desc.w = desc.h = 1;
 		desc.base_desc = desc.desc = " ";
 		return desc;
+	}
+	static bool itemHasDescriptor(Inventory item)
+	{
+		if(!item)
+			return false;
+		let ddeh = DD_EventHandler(StaticEventHandler.Find("DD_EventHandler"));
+		for(uint i = 0; i < ddeh.inv_descs.size(); ++i)
+			if(item is ddeh.inv_descs[i].item_cls)
+				return true;
+		return false;
 	}
 
 	/* Hotbar (belt) */

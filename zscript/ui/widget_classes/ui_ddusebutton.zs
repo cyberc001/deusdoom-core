@@ -8,7 +8,7 @@ class UI_DDUseButton : UI_DDSmallButton
 		let ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
 		super.processUIInput(e);
 		if(e.type == UiEvent.Type_LButtonDown && invdisp.selected_item){
-			EventHandler.SendNetworkEvent("dd_inventory_use_item", ddih.items.find(invdisp.selected_item), 0);
+			EventHandler.SendNetworkEvent("dd_inventory_use_item", ddih.items.find(invdisp.selected_item), ddih.items.size());
 		}
 	}
 }

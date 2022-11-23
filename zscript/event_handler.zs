@@ -75,7 +75,8 @@ class DD_EventHandler : DD_EventHandlerBase
 		name ddaugupgrcls = "DD_AugmentationUpgradeCanister";
 		name ddauglegdcls = "DD_AugmentationUpgradeCanisterLegendary";
 		if(((ddwepcls && e.thing is ddwepcls) || e.thing is "DDItem" || (e.thing is "Ammo" && (!dd_disable_pickup_wrapper_for_other_ammo || e.thing.bTHRUACTORS))
-			|| (ddcellcls && e.thing is ddcellcls) || (ddaugcancls && e.thing is ddaugcancls) || (ddaugupgrcls && e.thing is ddaugupgrcls) || (ddauglegdcls && e.thing is ddauglegdcls))
+			|| (ddcellcls && e.thing is ddcellcls) || (ddaugcancls && e.thing is ddaugcancls) || (ddaugupgrcls && e.thing is ddaugupgrcls) || (ddauglegdcls && e.thing is ddauglegdcls)
+			|| DD_InventoryHolder.itemHasDescriptor(Inventory(e.thing)))
 			&& !(e.thing is "DD_InventoryPickupWrapper")){
 			let wrap = DD_InventoryPickupWrapper(Actor.Spawn(performance_inventory_wrapper ? "DD_InventoryPickupWrapperPerformance" : "DD_InventoryPickupWrapper", e.thing.pos));
 			wrap.init(Inventory(e.thing));
@@ -329,6 +330,8 @@ class DD_EventHandler : DD_EventHandlerBase
 			let ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
 			if(e.args[0] < ddih.items.size() && e.args[1] < ddih.items.size())
 				ddih.useItem(ddih.items[e.args[0]], ddih.items[e.args[1]]);
+			else if(e.args[0] < ddih.items.size())
+				ddih.useItem(ddih.items[e.args[0]], null);
 		} else if(e.name == "dd_inventory_drop_item"){
 			let ddih = DD_InventoryHolder(plr.mo.FindInventory("DD_InventoryHolder"));
 			if(e.args[0] < ddih.items.size()){
