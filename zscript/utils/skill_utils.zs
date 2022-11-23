@@ -18,12 +18,21 @@ class DD_SkillState : Inventory
 
 	const skill_award_perlevel = 170;
 	const skill_award_per100secrets = 130;
+	array<string> visited_maps; // don't give points for re-visiting a hub map
 	override void Travelled()
 	{
-		int total_award = skill_award_perlevel;
-		let ddeh = DD_EventHandler(StaticEventHandler.Find("DD_EventHandler"));
-		total_award += ddeh.prev_level_secret_ratio * skill_award_per100secrets;
-		owner.giveInventory("DD_SkillPoints", ceil(ddeh.skill_utils.skill_points_mult * total_award));
+		if(visited_maps.find(level.MapName) == visited_maps.size()){
+			int total_award = skill_award_perlevel;
+			let ddeh = DD_EventHandler(StaticEventHandler.Find("DD_EventHandler"));
+			total_award += ddeh.prev_level_secret_ratio * skill_award_per100secrets;
+			owner.giveInventory("DD_SkillPoints", ceil(ddeh.skill_utils.skill_points_mult * total_award));
+			visited_maps.push(level.MapName);
+		}
+	}
+
+	override void BeginPlay()
+	{
+		visited_maps.push(level.MapName);
 	}
 }
 
