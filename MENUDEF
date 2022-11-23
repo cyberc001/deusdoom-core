@@ -19,6 +19,7 @@ OptionMenu "DD_Options"
 		StaticText ""
 		Control "Open inventory", dd_toggle_ui_inventory
 		Control "Open skills interface", dd_toggle_ui_skills
+		StaticText ""
 	}
 
 	OptionMenu "DD_Settings"
