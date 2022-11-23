@@ -111,4 +111,42 @@ class SpawnUtils
 				return mod_repls[i].replacement;
 		return replacee;
 	}
+
+	/* Replacing items directly in player's inventory: useful for STRIFE weapons */
+	array<SpawnReplacement> inventory_repls;
+	void addInventoryReplacement(class<Actor> replacee, class<Actor> replacement)
+	{
+		SpawnReplacement r = new("SpawnReplacement");
+		r.replacee = replacee; r.replacement = replacement;
+		inventory_repls.push(r);
+	}
+	play void checkInventoryReplacement()
+	{
+		for(uint i = 0; i < MAXPLAYERS; ++i){
+			if(!playeringame[i] || !players[i].mo)
+				continue;
+
+			PlayerPawn plr = players[i].mo;
+			DD_InventoryHolder ddih = DD_InventoryHolder(plr.FindInventory("DD_InventoryHolder"));
+			if(!ddih)
+				continue;
+			for(uint j = 0; j < inventory_repls.size(); ++j){
+				Name n = inventory_repls[j].replacee.getClassName();
+				int cnt = plr.countInv(n);
+				plr.TakeInventory(n, 1);
+				while(cnt > 0){
+					Inventory item = Inventory(Inventory.Spawn(inventory_repls[j].replacement, plr.pos));
+					if(!(item is "Ammo"))
+						ddih.addItem(item); // if it fails, spawned item will still be on the ground
+					else{
+						item.destroy();
+						Name n2 = inventory_repls[j].replacement.getClassName();
+						plr.GiveInventory(n2, 1); 
+						break;
+					}
+					--cnt;
+				}
+			}
+		}
+	}
 }

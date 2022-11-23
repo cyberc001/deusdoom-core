@@ -104,8 +104,8 @@ class DD_EventHandler : DD_EventHandlerBase
 				ddih = DD_InventoryHolder(Inventory.Spawn("DD_InventoryHolder"));
 				plr.addInventory(ddih);
 			}
-
 		}
+		spawn_utils.checkInventoryReplacement();
 	}
 	
 	// Inventory pickup projections
