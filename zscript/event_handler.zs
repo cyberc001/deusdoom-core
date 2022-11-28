@@ -374,6 +374,9 @@ class DD_EventHandler : DD_EventHandlerBase
 				wnd_nav = new("UI_Navigation");
 				wnd_skills = new("UI_Skills");
 				wnd_inventory = new("UI_Inventory");
+				wnd_nav.UIInit();
+				wnd_skills.UIInit();
+				wnd_inventory.UIInit();
 			}
 		}
 		if(wndmgr)
