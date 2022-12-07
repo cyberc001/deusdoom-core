@@ -37,6 +37,8 @@ class UI_Inventory : UI_Window
 		ammo_icon = TexMan.CheckForTexture("DXICO01");
 
 		// Widgets
+		if(widgets.size() > 0)
+			return;
 		invdisp = UI_DDInventoryDisplay(new("UI_DDInventoryDisplay"));
 		invdisp.x = x + 10; invdisp.y = y + 7;
 		invdisp.w = 128 - invdisp.x; invdisp.h = 157 - invdisp.y;
