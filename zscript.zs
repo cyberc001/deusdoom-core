@@ -1,6 +1,6 @@
 version "4.5"
 
-#include "zscript/decorations.zs"
+#include "zscript/dx_decorations.zs"
 #include "zscript/libeye.zs"
 #include "zscript/inventory.zs"
 #include "zscript/event_handler.zs"
